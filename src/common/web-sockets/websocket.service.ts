@@ -40,16 +40,6 @@ export class WebsocketService
         this.server.to(key).emit('users', usersCount);
     }
 
-    @SubscribeMessage('room')
-    handleRoom(
-        @MessageBody('room') room: string,
-        @ConnectedSocket() socket: Socket,
-    ) {
-        socket.join(room);
-        const rooms = this.server.sockets.adapter.rooms.get(room);
-        this.server.to(room).emit('users', rooms.size);
-    }
-
     @SubscribeMessage('chat')
     handleChat(
         @MessageBody('text') text: string,
